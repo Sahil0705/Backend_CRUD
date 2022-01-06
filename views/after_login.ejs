@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- {{!-- <script src="../src/script.js"></script>         --}} -->
+</head>
+<body>
+    <%- include(`./partials/navbar.ejs`) %>
+    <h1 style="font-family: 'Fugaz One'; font-size:30px; color:red"><%=user.firstname%></h1>
+
+        <div id='div1' style="position: relative; overflow-y:scroll;">
+
+        <table class="table table-striped">
+            <tr  class="bg-info">
+                <th align='center'>First Name</th>
+				<th align='center'>Last Name</th>
+				<th align='center'>Email</th>
+				<th align='center'>Gender</th>
+                <th align='center'>Age</th>
+                <th align='center'>Contact</th>
+            </tr>
+
+            <tbody id="myTable">
+                
+                    <tr>
+                        <td><%=user.firstname%></td>
+                        <td><%=user.lastname%></td>
+                        <td><%=user.email%></td>
+                        <td><%=user.gender%></td>
+                        <td><%=user.age%></td>
+                        <td><%=user.phone%></td>
+                    </tr>
+               
+            </tbody>
+
+		</table>
+
+        </div>
+
+</body>
+</html>

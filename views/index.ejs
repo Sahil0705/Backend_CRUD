@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <%- include('./partials/navbar.ejs') %>
+    <h1>Hello Index</h1>
+    <a href='/register'>Register</a>
+    <a href='/login'>Login</a>
+
+    <div id='div1' style="position: relative; overflow-y:scroll;">
+<br>
+        <table class="table table-striped">
+            <tr  class="bg-info">
+                <th align='center'>First Name</th>
+				<th align='center'>Last Name</th>
+				<th align='center'>Email</th>
+				<th align='center'>Gender</th>
+                <th align='center'>Age</th>
+                <th align='center'>Contact</th>
+            </tr>
+
+            <tbody id="myTable">
+                <% for(var i = 0; i<user.length;i++)
+                {%>
+                    <tr>
+                        <td><%=user[i].firstname%></td>
+                        <td><%=user[i].lastname%></td>
+                        <td><%=user[i].email%></td>
+                        <td><%=user[i].gender%></td>
+                        <td><%=user[i].age%></td>
+                        <td><%=user[i].phone%></td>
+                        <td><button type='button' onclick = "location.href='/delete?id=<%=user[i].email%>'">Delete</button></td>
+                        <td><button type='button' onclick = "location.href='/update?id=<%=user[i].email%>'">Update</button></td>
+                    </tr>
+               <%}%>
+            </tbody>
+
+		</table>
+
+        </div>
+
+
+</body>
+</html>
