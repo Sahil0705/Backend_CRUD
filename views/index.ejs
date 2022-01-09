@@ -23,6 +23,7 @@
 				<th align='center'>Gender</th>
                 <th align='center'>Age</th>
                 <th align='center'>Contact</th>
+                <th align='center'>Password</th>
             </tr>
 
             <tbody id="myTable">
@@ -35,6 +36,7 @@
                         <td><%=user[i].gender%></td>
                         <td><%=user[i].age%></td>
                         <td><%=user[i].phone%></td>
+                        <td><%=user[i].password%></td>
                         <td><button type='button' onclick = "location.href='/delete?id=<%=user[i].email%>'">Delete</button></td>
                         <td><button type='button' onclick = "location.href='/update?id=<%=user[i].email%>'">Update</button></td>
                     </tr>

@@ -235,10 +235,11 @@ app.post("/login",async(req,res)=>
         
         console.log(userEmail);
 
-        req.session.email = req.body.email;
-        console.log(req.session.email);
+        
         if(userEmail.password==pwd)
         {
+            req.session.email = req.body.email;
+            console.log(req.session.email);
             res.status(201).render("after_login",
             {
                 logged_in_user:entered_email,
