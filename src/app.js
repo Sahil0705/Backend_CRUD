@@ -4,8 +4,10 @@ const app = express();
 const port = process.env.PORT || 4000;
 const ejs = require("ejs");
 const buildTable = require("./script");
+const session = require('express-session')
 
 const Register = require("./models/usersdb");
+const { redirect } = require("express/lib/response");
 require("./db/conn");
 
 const static_path = path.join(__dirname,"../public");
@@ -24,16 +26,45 @@ app.set("view engine","ejs"); // if no templates, and directly view
 //hbs.registerPartials(partial_path);
 
 
+app.use(session({
+
+	// It holds the secret key for session
+	secret: 'Your_Secret_Key',
+
+	// Forces the session to be saved
+	// back to the session store
+	resave: true,
+
+	// Forces a session that is "uninitialized"
+	// to be saved to the store
+	saveUninitialized: true
+}))
+
+app.use(function(req, res, next) {
+    res.locals.email = req.session.email;
+    next();
+  });
+
+
 app.get("/",async(req,res)=>
 {
     //res.send("Sahil Donde");
-    try
+    console.log(req.session.email);
+    if(req.session.email==null)
     {
-    const userEmail = await Register.find();
-    res.render("index",{user:userEmail});
+        try
+        {
+        const userEmail = await Register.find();
+        res.render("index",{user:userEmail});
+        }
+        catch(err){}
+        
     }
-    catch(err){}
-    
+    else        
+    {
+        res.redirect("/login");
+    }
+
 });
 
 app.get("/delete",async(req,res)=>
@@ -155,10 +186,37 @@ app.post("/register",async(req,res)=>
     };
 });
 
-app.get("/login",(req,res)=>
+app.get("/login",async(req,res)=>
 {
     //res.send("Sahil Donde");
-    res.render("login"); // login.js
+    console.log(req.session.email);
+    if(req.session.email==null)
+        res.render("login"); // login.js
+    else        
+    {
+        try
+        {
+            const userEmail = await Register.findOne({email:req.session.email});
+            res.status(201).render("after_login",
+            {
+                logged_in_user:userEmail.email,
+                user:userEmail
+            });
+        }
+        catch(error)
+        {
+
+        }
+    }
+});
+
+app.get("/logout",(req,res)=>
+{
+    req.session.destroy(function(error)
+    {
+		console.log("Session Destroyed");
+    })
+    res.redirect("/");
 });
 
 app.post("/login",async(req,res)=>
@@ -176,13 +234,16 @@ app.post("/login",async(req,res)=>
         //res.send(userEmail);
         
         console.log(userEmail);
-        
+
+        req.session.email = req.body.email;
+        console.log(req.session.email);
         if(userEmail.password==pwd)
         {
             res.status(201).render("after_login",
             {
                 logged_in_user:entered_email,
-                user:userEmail
+                user:userEmail,
+                email:req.session.email
             });
             
         }

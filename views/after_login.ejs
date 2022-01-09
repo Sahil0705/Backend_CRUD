@@ -11,6 +11,7 @@
 <body>
     <%- include(`./partials/navbar.ejs`) %>
     <h1 style="font-family: 'Fugaz One'; font-size:30px; color:red"><%=user.firstname%></h1>
+    <h1 style="font-family: 'Fugaz One'; font-size:30px; color:red"><%=email%></h1>
 
         <div id='div1' style="position: relative; overflow-y:scroll;">
 
@@ -40,6 +41,6 @@
 		</table>
 
         </div>
-
+        <a href="/logout">Logout</a>
 </body>
 </html>
